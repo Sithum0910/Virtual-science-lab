@@ -10,19 +10,23 @@ const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(5, 5, 5).normalize();
 scene.add(light);
 
-// Load the 3D model
+// Load the 3D model when the button is clicked
 const loader = new THREE.GLTFLoader();
-loader.load(
-  "models/beaker.glb", // Path to your 3D model
-  (gltf) => {
-    const model = gltf.scene;
-    scene.add(model);
-  },
-  undefined,
-  (error) => {
-    console.error("Error loading 3D model:", error);
-  }
-);
+document.getElementById("start-experiment").addEventListener("click", () => {
+  console.log("Experiment started!");
+  loader.load(
+    "models/beaker.glb", // Path to your 3D model
+    (gltf) => {
+      console.log("3D model loaded successfully!");
+      const model = gltf.scene;
+      scene.add(model);
+    },
+    undefined,
+    (error) => {
+      console.error("Error loading 3D model:", error);
+    }
+  );
+});
 
 // Position the camera
 camera.position.z = 5;
@@ -40,3 +44,6 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+// Debugging: Check if Three.js is loaded
+console.log("Three.js loaded:", THREE);
